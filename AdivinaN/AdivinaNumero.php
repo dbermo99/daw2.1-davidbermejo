@@ -7,10 +7,11 @@
         <title>Indica un Número</title>
     </head>
     <body>
-        <p>Indica un numero</p>
+
         <form action="AdivinaNumero2.php" method="post">
-            <input type="number" name="numero" value="0 /">
-            <input type="submit" name="botton" value="Ocultar">
+            <p>Indica un numero</p>
+            <input type="number" name="oculto" value="0 /">
+            <input type="submit"  value="Ocultar">
         </form>
     </body>
 </html>
