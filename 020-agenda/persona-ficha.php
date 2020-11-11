@@ -14,7 +14,8 @@
 		$personaCategoriaId = "<introduzca el id de su categoria>";
 		$persona_estrella= null;
 	} else {
-		$sql = "SELECT id, estrella, nombre, apellido, telefono, categoria_id FROM persona WHERE id=?";
+		/*$sql = "SELECT id, estrella, nombre, apellido, telefono, categoria_id FROM persona WHERE id=?";*/
+        $sql = "SELECT * FROM persona WHERE id=?";
 
         $select = $pdo->prepare($sql);
         $select->execute([$id]);

@@ -8,6 +8,7 @@
     $select = $pdo->prepare($sql);
     $select->execute([]); // Array vacío porque la consulta preparada no requiere parámetros.
     $rs = $select->fetchAll();
+
 ?>
 
 
