@@ -4,10 +4,7 @@
 	$pdo = obtenerPdoConexionBD();
 
 	$id = (int)$_REQUEST["id"];
-	if(isset($_REQUEST["estrella"]))
-	    $estrella= $_REQUEST["estrella"];
-	else
-	    $estrella= null;
+	$estrella = isset($_REQUEST["estrella"]);
 	$nombre = $_REQUEST["nombre"];
 	$apellido= $_REQUEST["apellido"];
 	$telefono= $_REQUEST["telefono"];
@@ -20,7 +17,7 @@
  		$parametros = [$estrella, $nombre, $apellido, $telefono, $personaCategoriaId];
 	} else {
  		$sql = "UPDATE persona SET estrella=?, nombre=?, apellido=?, telefono=?, categoria_id=? WHERE id=?";
-        $parametros = [$estrella, $nombre, $apellido, $telefono, $personaCategoriaId, $id];
+        $parametros = [$estrella?1:0, $nombre, $apellido, $telefono, $personaCategoriaId, $id];
  	}
  	
     $sentencia = $pdo->prepare($sql);

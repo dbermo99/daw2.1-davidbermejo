@@ -17,9 +17,10 @@ $sql = "
                 c.nombre AS c_nombre
             FROM
                persona p, categoria c
-               WHERE p.categoria_id = c.id && p.estrella is null 
+               WHERE p.categoria_id = c.id && p.estrella like '0'
             ORDER BY p.nombre
     ";
+$ficha= "persona-noEstrellas.php";
 
 $select = $pdo->prepare($sql);
 $select->execute([]);
@@ -36,7 +37,7 @@ $rs = $select->fetchAll();
 
 <body>
 
-<h1>Listado de Personas</h1>
+<h1>Listado de Personas sin estrellas</h1>
 
 <table border="1">
 
@@ -52,10 +53,11 @@ $rs = $select->fetchAll();
         <tr>
 
             <td><a href="persona-ficha.php?id=<?=$fila["p_id"]?>">
-                    <?php if(isset($fila["p_estrella"])) { ?>
-                        <img src="estrella.jpg" width="10" height="10">
-                    <?php } else ?>
-                    <?= $fila["p_nombre"] ?>
+                    <?php if($fila["p_estrella"] == 1) { ?>
+                        <?= $fila["p_nombre"] ?> <a href="personaCambiarEstadoEstrella.php?id=<?=$fila["p_id"]?>&ficha=<?=$ficha?>"><img src="estrella.jpg" width="10" height="10"></a>
+                    <?php } else {?>
+                        <?= $fila["p_nombre"] ?> <a href="personaCambiarEstadoEstrella.php?id=<?=$fila["p_id"]?>&ficha=<?=$ficha?>"><img src="estrellaVacia.jpg" width="10" height="10"></a>
+                    <?php } ?>
                 </a></td>
 
 

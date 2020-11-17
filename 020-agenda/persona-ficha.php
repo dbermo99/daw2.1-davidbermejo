@@ -12,7 +12,7 @@
         $persona_apellido = "<introduzca apellido>";
 		$persona_telefono = "<introduzca telefono>";
 		$personaCategoriaId = "<introduzca el id de su categoria>";
-		$persona_estrella= null;
+		$persona_estrella= false;
 	} else {
 		/*$sql = "SELECT id, estrella, nombre, apellido, telefono, categoria_id FROM persona WHERE id=?";*/
         $sql = "SELECT * FROM persona WHERE id=?";
@@ -21,7 +21,7 @@
         $select->execute([$id]);
         $rs = $select->fetchAll();
 
-		$persona_estrella = $rs[0]["estrella"];
+		$persona_estrella = ($rs[0]["estrella"] == 1);
         $persona_nombre = $rs[0]["nombre"];
         $persona_apellido = $rs[0]["apellido"];
         $persona_telefono = $rs[0]["telefono"];
@@ -91,7 +91,7 @@
     <li>
         <strong>Estrella: </strong>
         <?php
-            if(isset($persona_estrella))
+            if($persona_estrella)
                 echo "<input type='checkbox' name='estrella' checked/>";
             else
                 echo "<input type='checkbox' name='estrella' />";

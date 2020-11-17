@@ -20,6 +20,7 @@
                WHERE p.categoria_id = c.id
             ORDER BY p.nombre
     ";
+    $ficha= "persona-listado.php";
 
     $select = $pdo->prepare($sql);
     $select->execute([]);
@@ -52,10 +53,11 @@
         <tr>
 
             <td><a href="persona-ficha.php?id=<?=$fila["p_id"]?>">
-                    <?php if(isset($fila["p_estrella"])) { ?>
-                        <img src="estrella.jpg" width="10" height="10">
-                    <?php } else ?>
-                    <?= $fila["p_nombre"] ?>
+                    <?php if($fila["p_estrella"] == 1) { ?>
+                        <?= $fila["p_nombre"] ?> <a href="personaCambiarEstadoEstrella.php?id=<?=$fila["p_id"]?>&ficha=<?=$ficha?>"><img src="estrella.jpg" width="10" height="10"></a>
+                    <?php } else {?>
+                        <?= $fila["p_nombre"] ?> <a href="personaCambiarEstadoEstrella.php?id=<?=$fila["p_id"]?>&ficha=<?=$ficha?>"><img src="estrellaVacia.jpg" width="10" height="10"></a>
+                    <?php } ?>
                 </a></td>
 
 
