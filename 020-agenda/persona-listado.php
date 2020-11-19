@@ -4,6 +4,32 @@
 
     $pdo = obtenerPdoConexionBD();
     session_start();
+
+    if (isset($_REQUEST["soloEstrellas"])) {
+        unset($_SESSION["sinEstrellas"]);
+        $_SESSION["soloEstrellas"] = true;
+    }
+    if(isset($_REQUEST["sinEstrellas"])) {
+        unset($_SESSION["soloEstrellas"]);
+        $_SESSION["sinEstrellas"] = true;
+    }
+    if (isset($_REQUEST["todos"])) {
+        unset($_SESSION["soloEstrellas"]);
+        unset($_SESSION["sinEstrellas"]);
+    }
+
+    if(isset($_SESSION["soloEstrellas"])) {
+        $posibleClausulaWhere= "&& p.estrella=1";
+        $ficha= "persona-listado.php?soloEstrellas";
+    } else if(isset($_SESSION["sinEstrellas"])) {
+        $posibleClausulaWhere= "&& p.estrella=0";
+        $ficha= "persona-listado.php?sinEstrellas";
+    } else {
+        $posibleClausulaWhere= "";
+        $ficha= "persona-listado.php";
+    }
+
+
     $sql = "
            SELECT
                 p.id     AS p_id,
@@ -17,10 +43,11 @@
                 c.nombre AS c_nombre
             FROM
                persona p, categoria c
-               WHERE p.categoria_id = c.id
+               WHERE p.categoria_id = c.id 
+              $posibleClausulaWhere
             ORDER BY p.nombre
     ";
-    $ficha= "persona-listado.php";
+
 
     $select = $pdo->prepare($sql);
     $select->execute([]);
@@ -45,7 +72,7 @@
         <th>Nombre</th>
         <th>Apellido</th>
         <th>Telefono</th>
-        <th>CategoriaId</th>
+        <th>Categoria</th>
     </tr>
 
     <?php
@@ -63,7 +90,7 @@
 
             <td><a href="persona-ficha.php?id=<?=$fila["p_id"]?>"> <?=$fila["p_apellido"] ?> </a></td>
             <td><a href="persona-ficha.php?id=<?=$fila["p_id"]?>"> <?=$fila["p_telefono"] ?> </a></td>
-            <td><a href="persona-ficha.php?id=<?=$fila["p_id"]?>"> <?=$fila["p_categoriaId"] ?> </a></td>
+            <td><a href="persona-ficha.php?id=<?=$fila["p_id"]?>"> <?=$fila["c_nombre"] ?> </a></td>
             <td><a href="persona-eliminar.php?id=<?=$fila["p_id"]?>"> (X)                   </a></td>
         </tr>
     <?php } ?>
@@ -79,9 +106,11 @@
 
 <a href="categoria-listado.php">Gestionar listado de Categorias</a>
 <br />
-<a href="persona-estrellas.php">Listado personas con estrellas</a>
+<a href="persona-listado.php?soloEstrellas">Listado personas con estrellas</a>
 <br />
-<a href="persona-noEstrellas.php">Listado personas sin estrellas</a>
+<a href="persona-listado.php?sinEstrellas">Listado personas sin estrellas</a>
+<br />
+<a href='persona-listado.php?todos'>Mostrar todas las personas</a>
 
 </body>
 

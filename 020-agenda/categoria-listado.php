@@ -50,9 +50,9 @@
 
 <a href="persona-listado.php">Gestionar listado de Personas</a>
 <br />
-<a href="persona-noEstrellas.php">Gestionar listado de personas sin estrellas</a>
+<a href="persona-listado.php?sinEstrella">Gestionar listado de personas sin estrellas</a>
 <br />
-<a href="persona-estrellas.php">Gestionar listado de personas con estrellas</a>
+<a href="persona-listado.php?soloEstrella">Gestionar listado de personas con estrellas</a>
 
 </body>
 
