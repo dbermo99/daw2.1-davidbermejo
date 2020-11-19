@@ -3,7 +3,7 @@
     require_once "_varios.php";
 
     $pdo = obtenerPdoConexionBD();
-
+    session_start();
     $sql = "
            SELECT
                 p.id     AS p_id,
