@@ -87,6 +87,20 @@ function cerrarSesion()
     unset($_SESSION["apellido"]);
 }
 
+function crearUsuario($identificador, $contrasenna, $nombre, $apellidos)
+{
+    $pdo= obtenerPdoConexionBD();
+    $usuarioExistente= obtenerUsuario($identificador, $contrasenna);
+    if(!$usuarioExistente) {
+        $sql= "INSERT INTO usuario(identificador, contrasenna, nombre, apellidos) VALUES(?, ?, ?, ?)";
+        $sentencia = $pdo->prepare($sql);
+        $sqlExito = $sentencia->execute([$identificador, $contrasenna, $nombre, $apellidos]);
+    }else {
+        echo "ya existe";
+    }
+
+}
+
 // (Esta función no se utiliza en este proyecto pero se deja por si se optimizase el flujo de navegación.)
 // Esta función redirige a otra página y deja de ejecutar el PHP que la llamó:
 function redireccionar(string $url)

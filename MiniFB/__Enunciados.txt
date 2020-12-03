@@ -10,3 +10,9 @@ Orden sugerido:
 6: ContPub1 (mostrar info y eso)
 
 7: Opcional: HASH y SAL
+
+
+Extras (grupo .1):
+Bis 1: Crear cuenta de usuario (OJO con identificadores repetidos...)
+Bis 2: Ver/modificar mi cuenta de usuario
+Bis 3: Subir foto perfil
