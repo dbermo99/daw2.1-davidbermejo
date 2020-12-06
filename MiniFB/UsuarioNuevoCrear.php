@@ -5,17 +5,20 @@ $identificador= $_REQUEST["identificador"];
 $contrasenna= $_REQUEST["contrasenna"];
 $nombre= $_REQUEST["nombre"];
 $apellidos= $_REQUEST["apellidos"];
+$foto= $_REQUEST["foto"];
 
 // TODO Intentar crear (añadir funciones en _Varios.php para crear y tal).
 //
 // TODO Y redirigir a donde sea.
 
-$arrayUsuario = crearUsuario($identificador, $contrasenna, $nombre, $apellidos);
+crearUsuario($identificador, $contrasenna, $nombre, $apellidos, $foto);
+$arrayUsuario = obtenerUsuario($identificador, $contrasenna);
 
 // TODO ¿Excepciones?
 
-/*if ($arrayUsuario) {
-
+if ($arrayUsuario) {
+    marcarSesionComoIniciada($arrayUsuario);
+    redireccionar("ContenidoPrivado1.php");
 } else {
 
-}*/
+}

@@ -1,7 +1,7 @@
 <?php
-/*session_start();
-if($_SESSION["usuarioCreado"] == false)
-    echo "<p>El usuario ya existe</p>";*/
+   if(isset($_REQUEST["error"])) {
+       echo "<p>El usuario ya existe</p>";
+   }
 ?>
 <html>
     <head>
@@ -10,28 +10,18 @@ if($_SESSION["usuarioCreado"] == false)
     <body>
 
         <h1>Registrarse</h1>
+        
         <form action="UsuarioNuevoCrear.php" method="post">
-            <table>
-                <tr>
-                    <td>Usuario</td>
-                    <td><input type="text" name="identificador"></td>
-                </tr>
-                <tr>
-                    <td>Contrasenna</td>
-                    <td><input type="password" name="contrasenna"></td>
-                </tr>
-                <tr>
-                    <td>Nombre</td>
-                    <td><input type="text" name="nombre"></td>
-                </tr>
-                <tr>
-                    <td>Apellidos</td>
-                    <td><input type="text" name="apellidos"></td>
-                </tr>
-                <tr>
-                    <td><input type="submit" name="botton" value="Registrarse"></td>
-                </tr>
-            </table>
+            <label>Usuario</label>
+            <input type="text" name="identificador"><br>
+            <label>Contraseña</label>
+            <input type="password" name="contrasenna"><br>
+            <label>Nombre</label>
+            <input type="text" name="nombre"><br>
+            <label>Apellidos</label>
+            <input type="text" name="apellidos"><br>
+            <input type="file" name="foto"><br>
+            <input type="submit" name="botton" value="Registrarse">
         </form>
     </body>
 </html>

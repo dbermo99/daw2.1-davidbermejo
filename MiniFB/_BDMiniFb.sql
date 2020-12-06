@@ -15,8 +15,11 @@ SET time_zone = "+00:00";
 --
 -- Base de datos: `MiniFb`
 --
-CREATE DATABASE IF NOT EXISTS `MiniFb` DEFAULT CHARACTER SET utf8 COLLATE utf8_spanish_ci;
-USE `MiniFb`;
+/*CREATE DATABASE IF NOT EXISTS `MiniFb` DEFAULT CHARACTER SET utf8 COLLATE utf8_spanish_ci;
+USE `MiniFb`;*/
+DROP DATABASE IF EXISTS MiniFb;
+CREATE DATABASE MiniFb;
+USE MiniFb;
 
 -- --------------------------------------------------------
 
@@ -31,7 +34,8 @@ CREATE TABLE `Usuario` (
                            `codigoCookie` varchar(50) COLLATE utf8_spanish_ci DEFAULT NULL,
                            `tipoUsuario` int(11) NOT NULL,
                            `nombre` varchar(50) COLLATE utf8_spanish_ci NOT NULL,
-                           `apellidos` varchar(50) COLLATE utf8_spanish_ci NOT NULL
+                           `apellidos` varchar(50) COLLATE utf8_spanish_ci NOT NULL,
+                           `foto` LONGBLOB
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
 
 --

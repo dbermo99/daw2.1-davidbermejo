@@ -20,7 +20,7 @@
 
 <body>
 
-<p><?php echo $_SESSION["identificador"]; ?></p>
+<a href="UsuarioPerfilVer.php?identificador='<?= $_SESSION["identificador"] ?>'&nombre='<?= $_SESSION["nombre"] ?>'&apellidos='<?= $_SESSION["apellidos"] ?>'"><?php echo $_SESSION["identificador"] ?></a>
 <a href="SesionCerrar.php">Cerrar Sesion</a>
 
 <h1>Contenido Privado 2</h1>

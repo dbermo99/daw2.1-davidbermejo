@@ -1,6 +1,6 @@
 <?php
 require_once "_Varios.php";
-session_start();
+
 $_SESSION["identificador"] = $_REQUEST["identificador"];
 $_SESSION["contrasenna"] = $_REQUEST["contrasenna"];
 
@@ -10,5 +10,5 @@ if ($arrayUsuario) { // HAN venido datos: identificador existía y contraseña e
     marcarSesionComoIniciada($arrayUsuario);
     redireccionar("ContenidoPrivado1.php");
 } else {
-    redireccionar("SesionInicioMostrarFormulario.php");
+    redireccionar("SesionInicioMostrarFormulario.php?error=true");
 }

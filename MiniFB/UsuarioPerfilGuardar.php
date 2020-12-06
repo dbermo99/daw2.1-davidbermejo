@@ -1,17 +1,17 @@
 <?php
 
-// TODO ...$_REQUEST["..."]...
+require_once "_Varios.php";
 
-// TODO Intentar guardar (añadir funciones en _Varios.php para crear y tal).
+$identificador= $_REQUEST["identificador"];
+$contrasenna= $_REQUEST["contrasenna"];
+$nombre= $_REQUEST["nombre"];
+$apellidos= $_REQUEST["apellidos"];
+$foto= $_REQUEST["foto"];
 
-// TODO Y redirigir a donde sea.
-
-$correcto = actualizarUsuarioEnBD($arrayUsuario);
-
-// TODO ¿Excepciones?
+$correcto = actualizarUsuarioEnBD($identificador, $contrasenna, $nombre, $apellidos, $foto);
 
 if ($correcto) {
-
+    redireccionar("ContenidoPrivado1.php");
 } else {
-
+    redireccionar("ContenidoPrivado1.php");
 }
