@@ -11,7 +11,7 @@
 
         <h1>Registrarse</h1>
         
-        <form action="UsuarioNuevoCrear.php" method="post">
+        <form action="UsuarioNuevoCrear.php" method="post" enctype="multipart/form-data">
             <label>Usuario</label>
             <input type="text" name="identificador"><br>
             <label>Contraseña</label>
@@ -20,7 +20,8 @@
             <input type="text" name="nombre"><br>
             <label>Apellidos</label>
             <input type="text" name="apellidos"><br>
-            <input type="file" name="foto"><br>
+            <label>Foto Perfil:</label>
+            <input type="file" name="foto" id="foto"><br>
             <input type="submit" name="botton" value="Registrarse">
         </form>
     </body>

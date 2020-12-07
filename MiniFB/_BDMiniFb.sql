@@ -35,7 +35,7 @@ CREATE TABLE `Usuario` (
                            `tipoUsuario` int(11) NOT NULL,
                            `nombre` varchar(50) COLLATE utf8_spanish_ci NOT NULL,
                            `apellidos` varchar(50) COLLATE utf8_spanish_ci NOT NULL,
-                           `foto` LONGBLOB
+                           `foto` varchar(200)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
 
 --
