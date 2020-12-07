@@ -5,7 +5,7 @@ $identificador= $_REQUEST["identificador"];
 $contrasenna= $_REQUEST["contrasenna"];
 $nombre= $_REQUEST["nombre"];
 $apellidos= $_REQUEST["apellidos"];
-$foto= $_REQUEST["foto"];
+$foto= $_FILES["foto"]["name"];
 
 // TODO Intentar crear (añadir funciones en _Varios.php para crear y tal).
 //

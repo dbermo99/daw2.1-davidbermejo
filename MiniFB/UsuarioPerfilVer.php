@@ -8,10 +8,12 @@
     $pdo= obtenerPdoConexionBD();
     $sql= "SELECT foto FROM usuario WHERE id=$_SESSION[id]";
     $sentencia = $pdo->prepare($sql);
-    $sqlExito = $sentencia->execute([]);
+    $sentencia->execute([]);
     $rs = $sentencia->fetchAll();
     if($rs[0]["foto"] != null) {
         echo "<img src='fotos/".$rs[0]["foto"]."' width='100' heigth='100'>";
+    } else {
+        echo "<img src='fotos/fotoPerfil.jpg' width='100' heigth='100'>";
     }
 
 ?>

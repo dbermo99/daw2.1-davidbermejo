@@ -46,15 +46,6 @@ function obtenerUsuario($identificador, $contrasenna): ?array
     }else
         return null;
 
-    /*$pdo= obtenerPdoConexionBD();
-
-    $sql= "SELECT * FROM Usuario WHERE identificador=? AND contrasenna=?";
-    $sentencia = $pdo->prepare($sql);
-    $sentencia->execute([$identificador, $contrasenna]);
-    $rs = $sentencia->fetchAll();
-
-   return $sentencia->rowCount()==1 ? rs[0] : null;*/
-
 }
 
 function marcarSesionComoIniciada($arrayUsuario)
@@ -62,6 +53,7 @@ function marcarSesionComoIniciada($arrayUsuario)
     // TODO Anotar en el post-it todos estos datos:
     $_SESSION["id"] = $arrayUsuario["id"];
     $_SESSION["identificador"] = $arrayUsuario["identificador"];
+    $_SESSION["contrasenna"] = $arrayUsuario["contrasenna"];
     $_SESSION["tipoUsuario"] = $arrayUsuario["tipoUsuario"];
     $_SESSION["nombre"] = $arrayUsuario["nombre"];
     $_SESSION["apellidos"] = $arrayUsuario["apellidos"];
@@ -70,16 +62,12 @@ function marcarSesionComoIniciada($arrayUsuario)
 
 function haySesionIniciada(): ?bool //se llama bool No boolean
 {
-    // TODO Pendiente hacer la comprobación.
-
-    // Está iniciada si isset($_SESSION["id"])
     if(isset($_SESSION["id"])) {
         $conectado = true;
     } else {
         $conectado = false;
     }
     return $conectado;
-
 }
 
 function cerrarSesion()
