@@ -87,8 +87,13 @@ function cerrarSesion()
 function crearUsuario($identificador, $contrasenna, $nombre, $apellidos, $foto)
 {
     $pdo= obtenerPdoConexionBD();
-    $usuarioExistente= obtenerUsuario($identificador, $contrasenna);
-    if(!$usuarioExistente) {
+
+    $sql= "SELECT * FROM Usuario WHERE identificador=?";
+    $sentencia = $pdo->prepare($sql);
+    $sqlExito = $sentencia->execute([$identificador]);
+    $rs = $sentencia->fetchAll();
+
+    if(!rs[0]) {
         $sql= "INSERT INTO usuario(identificador, contrasenna, nombre, apellidos, foto) VALUES(?, ?, ?, ?, ?)";
         $sentencia = $pdo->prepare($sql);
         $sqlExito = $sentencia->execute([$identificador, $contrasenna, $nombre, $apellidos, $foto]);

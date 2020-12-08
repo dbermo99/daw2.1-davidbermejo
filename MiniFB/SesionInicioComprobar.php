@@ -6,9 +6,9 @@ $_SESSION["contrasenna"] = $_REQUEST["contrasenna"];
 
 $arrayUsuario= obtenerUsuario($_SESSION["identificador"], $_SESSION["contrasenna"]);
 
-if ($arrayUsuario) { // HAN venido datos: identificador existía y contraseña era correcta.
+if ($arrayUsuario) {
     marcarSesionComoIniciada($arrayUsuario);
     redireccionar("ContenidoPrivado1.php");
 } else {
-    redireccionar("SesionInicioMostrarFormulario.php?error=true");
+    redireccionar("SesionInicioMostrarFormulario.php?incorrecto");
 }

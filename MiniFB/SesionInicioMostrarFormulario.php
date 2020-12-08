@@ -1,5 +1,7 @@
 <?php
-
+    if(isset($_REQUEST["incorrecto"])) {
+        echo "<p>Datos erróneos. Asegúrese que todo está bien escrito.</p>";
+    }
 ?>
 
 <html>
