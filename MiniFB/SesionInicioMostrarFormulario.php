@@ -21,6 +21,8 @@
     <input type="text" name="identificador"><br>
     <label>Contraseña</label>
     <input type="password" name="contrasenna"><br>
+    <label for='recordar'>Recuérdame aunque cierre el navegador</label>
+    <input type='checkbox' name='recordar' id='recordar'><br>
     <input type="submit" name="botton" value="IniciarSesion">
 </form>
 <form action="UsuarioNuevoFormulario.php" method="post">

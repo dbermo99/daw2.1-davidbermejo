@@ -5,6 +5,8 @@
     $nombre= $_REQUEST["nombre"];
     $apellidos= $_REQUEST["apellidos"];
 
+    
+
     $pdo= obtenerPdoConexionBD();
     $sql= "SELECT foto FROM usuario WHERE id=$_SESSION[id]";
     $sentencia = $pdo->prepare($sql);

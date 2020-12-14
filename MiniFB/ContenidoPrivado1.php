@@ -1,6 +1,6 @@
 <?php
     require_once "_Varios.php";
-    if (!haySesionIniciada()) {
+    if (!haySesionIniciada() && !intentarCanjearSesionCookie()) {
         redireccionar("SesionInicioMostrarFormulario.php");
     }
     
@@ -18,7 +18,7 @@
 
 <body>
 
-<a href="UsuarioPerfilVer.php?identificador='<?= $_SESSION['identificador'] ?>'&nombre='<?= $_SESSION['nombre'] ?>'&apellidos='<?= $_SESSION['apellidos'] ?>'"><?php echo $_SESSION['identificador'] ?></a>
+<a href="UsuarioPerfilVer.php?identificador='<?= $_SESSION["identificador"] ?>'&nombre='<?= $_SESSION["nombre"] ?>'&apellidos='<?= $_SESSION["apellidos"] ?>'"><?php echo $_SESSION["identificador"] ?></a>
 <a href="SesionCerrar.php">Cerrar Sesion</a>
 
 <h1>Contenido Privado 1</h1>
