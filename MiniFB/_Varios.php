@@ -137,8 +137,8 @@ function intentarCanjearSesionCookie(): bool
 }
 
 function pintarInfoSesion() {
-    if (haySesionRamIniciada()) {
-        echo "<span>Sesión iniciada por <a href='UsuarioPerfilVer.php'>$_SESSION[identificador]</a> ($_SESSION[nombre] $_SESSION[apellidos]) <a href='SesionCerrar.php'>Cerrar sesión</a></span>";
+    if (haySesionIniciada()) {
+        echo "<span>Sesión iniciada por <a href='UsuarioPerfilVer.php>'$_SESSION[identificador]'</a> ($_SESSION[nombre] $_SESSION[apellidos]) <a href='SesionCerrar.php'>Cerrar sesión</a></span>";
     } else {
         echo "<a href='SesionInicioFormulario.php'>Iniciar sesión</a>";
     }
