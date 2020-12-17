@@ -62,7 +62,7 @@ class DAO
     public static function categoriaObtenerPorId(int $id): ?Categoria
     {
         $rs = self::ejecutarConsulta(
-            "SELECT * FROM categoria WHERE id=?",
+            "SELECT * FROM Categoria WHERE id=?",
             [$id]
         );
         if ($rs) return self::crearCategoriaDesdeRs($rs[0]);
@@ -72,7 +72,7 @@ class DAO
     public static function categoriaActualizar($id, $nombre)
     {
         self::ejecutarActualizacion(
-            "UPDATE categoria SET nombre=? WHERE id=?",
+            "UPDATE Categoria SET nombre=? WHERE id=?",
             [$nombre, $id]
         );
     }
@@ -80,7 +80,7 @@ class DAO
     public static function categoriaCrear(string $nombre): bool
     {
         return self::ejecutarActualizacion(
-            "INSERT INTO categoria (nombre) VALUES (?)",
+            "INSERT INTO Categoria (nombre) VALUES (?)",
             [$nombre]
         );
     }
@@ -89,7 +89,7 @@ class DAO
     {
         $datos = [];
         $rs = self::ejecutarConsulta(
-            "SELECT * FROM categoria ORDER BY nombre",
+            "SELECT * FROM Categoria ORDER BY nombre",
             []
         );
 
@@ -103,7 +103,7 @@ class DAO
 	public static function eliminarCategoriaPorId(int $id): bool
     {
         
-        $sql = "DELETE FROM categoria WHERE id=?";
+        $sql = "DELETE FROM Categoria WHERE id=?";
 
         return self::ejecutarActualizacion($sql, [$id]);
     }
@@ -111,7 +111,7 @@ class DAO
     public static function categoriaGuardarPorId(int $id, string $nombre): bool
     {
         return self::ejecutarActualizacion(
-            "UPDATE categoria SET nombre=? WHERE id=?",
+            "UPDATE Categoria SET nombre=? WHERE id=?",
             [$nombre, $id]
         );
     }
@@ -123,13 +123,13 @@ class DAO
 		    $categoriaNombre = "<introduzca nombre>";
 	    } else {
             $rs= self::ejecutarConsulta(
-                "SELECT nombre FROM categoria WHERE id=?",
+                "SELECT nombre FROM Categoria WHERE id=?",
                 [$id]
             );
 		    $categoriaNombre = $rs[0]["nombre"];
 	    }
         $personas= self::ejecutarConsulta(
-            "SELECT * FROM persona WHERE categoriaId=? ORDER BY nombre",
+            "SELECT * FROM persona WHERE CategoriaId=? ORDER BY nombre",
             [$id]
         );
         return [$nuevaEntrada, $categoriaNombre, $personas];
