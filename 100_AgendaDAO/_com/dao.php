@@ -38,31 +38,34 @@ class DAO
         return $select->fetchAll();
     }
 
-    private static function ejecutarActualizacion(string $sql, array $parametros): void
+    private static function ejecutarActualizacion(string $sql, array $parametros): bool
     {
         if (!isset(self::$pdo)) self::$pdo = self::obtenerPdoConexionBd();
 
         $actualizacion = self::$pdo->prepare($sql);
-        $actualizacion->execute($parametros);
+        return $actualizacion->execute($parametros);
     }
 
 
 
-    /* Categoria */
+    /* CATEGORÍA */
 
-    private static function crearCrategoriaDesdeRs(array $rs): Categoria
+    private static function crearCategoriaDesdeRs(array $rs): Categoria
     {
         return new Categoria($rs[0]["id"], $rs[0]["nombre"]);
     }
 
     public static function categoriaObtenerPorId(int $id): ?Categoria
     {
-        $rs = self::ejecutarConsulta("SELECT * FROM categoria WHERE id=?", [$id]);
+        $rs = self::ejecutarConsulta(
+            "SELECT * FROM categoria WHERE id=?",
+            [$id]
+        );
         if ($rs) return self::crearCategoriaDesdeRs($rs);
         else return null;
     }
 
-    public static function categoriaActualizar($id, $nombre): void
+    public static function categoriaActualizar($id, $nombre)
     {
         self::ejecutarActualizacion(
             "UPDATE categoria SET nombre=? WHERE id=?",
@@ -70,23 +73,27 @@ class DAO
         );
     }
 
-    public static function categoriaCrear(string $nombre): void
+    public static function categoriaCrear(string $nombre)
     {
-        self::ejecutarActualizacion("INSERT INTO categoria (nombre) VALUES (?);",
-            [$nombre]);
+        self::ejecutarActualizacion(
+            "INSERT INTO categoria (nombre) VALUES (?)",
+            [$nombre]
+        );
     }
 
-
-    public static function categoriaObtenerTodos(): array
+    public static function categoriaObtenerTodas(): array
     {
         $datos = [];
-        $rs = self::ejecutarConsulta("SELECT * FROM categoria ORDER BY nombre", []);
+        $rs = self::ejecutarConsulta(
+            "SELECT * FROM categoria ORDER BY nombre",
+            []
+        );
 
         foreach ($rs as $fila) {
-            $categoria = new Categoria($fila["id"], $fila["nombre"]);
+            $categoria = crearCategoriaDesdeRs($fila);
             array_push($datos, $categoria);
         }
+
         return $datos;
     }
-
 }

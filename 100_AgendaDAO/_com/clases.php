@@ -6,7 +6,7 @@ abstract class Dato
 
 trait Identificable
 {
-    protected $id;
+    protected int $id;
 
     public function getId(): int
     {
@@ -19,24 +19,25 @@ trait Identificable
     }
 }
 
-class Categoria extends Dato {
+class Categoria extends Dato
+{
     use Identificable;
 
-    private $nombre;
+    private string $nombre;
 
-    public function __construct($id, $nombre) {
+    public function __construct(int $id, string $nombre)
+    {
         $this->setId($id);
         $this->setNombre($nombre);
     }
 
-    public function getNombre()
+    public function getNombre(): string
     {
         return $this->nombre;
     }
 
-    public function setNombre($nombre)
+    public function setNombre(string $nombre)
     {
         $this->nombre = $nombre;
     }
-
 }

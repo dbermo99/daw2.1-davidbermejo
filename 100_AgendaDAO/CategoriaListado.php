@@ -1,6 +1,10 @@
 <?php
+
+	phpinfo();
+
 	require_once "_com/dao.php";
-    $categorias = DAO::categoriaObtenerTodos();
+
+	$categorias = DAO::categoriaObtenerTodas();
 ?>
 
 
@@ -23,10 +27,10 @@
 		<th>Nombre</th>
 	</tr>
 
-	<?php foreach ($categorias as $fila) { ?>
+	<?php foreach ($categorias as $categoria) { ?>
         <tr>
-            <td><a href='CategoriaFicha.php?id=<?=$fila->getId()?>'> <?= $fila->getNombre() ?> </a></td>
-            <td><a href='CategoriaEliminar.php?id=<?=$fila->getId()?>'> (X)                   </a></td>
+            <td><a href='CategoriaFicha.php?id=<?=$categoria->getId()?>'>    <?=$categoria->getNombre()?> </a></td>
+            <td><a href='CategoriaEliminar.php?id=<?=$categoria->getId()?>'> (X)                            </a></td>
         </tr>
 	<?php } ?>
 
