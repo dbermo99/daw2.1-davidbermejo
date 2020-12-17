@@ -1,7 +1,7 @@
 <?php
 
-require_once "clases.php";
-require_once "utilidades.php";
+require_once "Clases.php";
+require_once "Varios.php";
 
 class DAO
 {
@@ -35,7 +35,9 @@ class DAO
 
         $select = self::$pdo->prepare($sql);
         $select->execute($parametros);
-        return $select->fetchAll();
+        $rs = $select->fetchAll();
+
+        return $rs;
     }
 
     private static function ejecutarActualizacion(string $sql, array $parametros): bool
@@ -43,16 +45,18 @@ class DAO
         if (!isset(self::$pdo)) self::$pdo = self::obtenerPdoConexionBd();
 
         $actualizacion = self::$pdo->prepare($sql);
-        return $actualizacion->execute($parametros);
+        $sqlConExito = $actualizacion->execute($parametros);
+
+        return $sqlConExito;
     }
 
 
 
     /* CATEGORÍA */
 
-    private static function crearCategoriaDesdeRs(array $rs): Categoria
+    private static function categoriaCrearDesdeRs(array $fila): Categoria
     {
-        return new Categoria($rs[0]["id"], $rs[0]["nombre"]);
+        return new Categoria($fila["id"], $fila["nombre"]);
     }
 
     public static function categoriaObtenerPorId(int $id): ?Categoria
@@ -61,7 +65,7 @@ class DAO
             "SELECT * FROM categoria WHERE id=?",
             [$id]
         );
-        if ($rs) return self::crearCategoriaDesdeRs($rs);
+        if ($rs) return self::crearCategoriaDesdeRs($rs[0]);
         else return null;
     }
 
@@ -73,9 +77,9 @@ class DAO
         );
     }
 
-    public static function categoriaCrear(string $nombre)
+    public static function categoriaCrear(string $nombre): bool
     {
-        self::ejecutarActualizacion(
+        return self::ejecutarActualizacion(
             "INSERT INTO categoria (nombre) VALUES (?)",
             [$nombre]
         );
@@ -90,10 +94,45 @@ class DAO
         );
 
         foreach ($rs as $fila) {
-            $categoria = crearCategoriaDesdeRs($fila);
+            $categoria = self::categoriaCrearDesdeRs($fila);
             array_push($datos, $categoria);
         }
 
         return $datos;
     }
+	public static function eliminarCategoriaPorId(int $id): bool
+    {
+        
+        $sql = "DELETE FROM categoria WHERE id=?";
+
+        return self::ejecutarActualizacion($sql, [$id]);
+    }
+
+    public static function categoriaGuardarPorId(int $id, string $nombre): bool
+    {
+        return self::ejecutarActualizacion(
+            "UPDATE categoria SET nombre=? WHERE id=?",
+            [$nombre, $id]
+        );
+    }
+
+    public static function categoriaFicha($id): array
+    {
+        $nuevaEntrada = ($id == -1);
+	    if ($nuevaEntrada) {
+		    $categoriaNombre = "<introduzca nombre>";
+	    } else {
+            $rs= self::ejecutarConsulta(
+                "SELECT nombre FROM categoria WHERE id=?",
+                [$id]
+            );
+		    $categoriaNombre = $rs[0]["nombre"];
+	    }
+        $personas= self::ejecutarConsulta(
+            "SELECT * FROM persona WHERE categoriaId=? ORDER BY nombre",
+            [$id]
+        );
+        return [$nuevaEntrada, $categoriaNombre, $personas];
+    }
+
 }

@@ -1,7 +1,5 @@
 <?php
-
-	phpinfo();
-
+	require_once "_com/Varios.php";
 	require_once "_com/dao.php";
 
 	$categorias = DAO::categoriaObtenerTodas();
