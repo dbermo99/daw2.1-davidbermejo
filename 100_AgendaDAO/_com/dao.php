@@ -168,11 +168,11 @@ class DAO
         );
     }
 
-    public static function personaObtenerTodas(): array
+    public static function personaObtenerTodas($posibleClausulaWhere): array
     {
         $datos = [];
         $rs = self::ejecutarConsulta(
-            "SELECT * FROM Persona ORDER BY nombre",
+            "SELECT * FROM Persona $posibleClausulaWhere ORDER BY nombre",
             []
         );
 

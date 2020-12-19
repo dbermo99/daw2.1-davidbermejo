@@ -58,7 +58,7 @@ class Persona extends Dato
         $this->setNombre($nombre);
         $this->setApellidos($apellidos);
         $this->setTelefono($telefono);
-        //$this-setEstrella($estrella);
+        $this->setEstrella($estrella);
         $this->setCategoriaId($categoriaId);
     }
 
