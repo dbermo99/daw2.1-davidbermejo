@@ -1,41 +1,9 @@
 <?php
-    require_once "_Varios.php";
+    require_once "_com/Varios.php";
+	require_once "_com/dao.php";
 
-    $conexion = obtenerPdoConexionBD();
-
-    session_start(); // Crear post-it vacío, o recuperar el que ya haya  (vacío o con cosas).
-    if (isset($_REQUEST["soloEstrellas"])) {
-        $_SESSION["soloEstrellas"] = true;
-    }
-    if (isset($_REQUEST["todos"])) {
-        unset($_SESSION["soloEstrellas"]);
-    }
-
-    $posibleClausulaWhere = isset($_SESSION["soloEstrellas"]) ? "WHERE p.estrella=1" : "";
-
-    $sql = "
-               SELECT
-                    p.id     AS pId,
-                    p.nombre AS pNombre,
-                    p.apellidos AS pApellidos,
-                    p.estrella AS pEstrella,
-                    c.id     AS cId,
-                    c.nombre AS cNombre
-                FROM
-                   persona AS p INNER JOIN categoria AS c
-                   ON p.categoriaId = c.id
-                $posibleClausulaWhere
-                ORDER BY p.nombre
-            ";
-
-    $select = $conexion->prepare($sql);
-    $select->execute([]); // Array vacío porque la consulta preparada no requiere parámetros.
-    $rs = $select->fetchAll();
-
-
-    // INTERFAZ:
-    // $rs
-    // $_SESSION
+    $personas = DAO::personaObtenerTodas();
+    
 ?>
 
 
@@ -56,27 +24,15 @@
 
     <tr>
         <th>Persona</th>
-        <th>Categoría</th>
+        <th>Categoria</th>
     </tr>
 
     <?php
-    foreach ($rs as $fila) { ?>
+    foreach ($personas as $persona) { ?>
         <tr>
-            <td>
-                <?php
-                    $urlImagen = $fila["pEstrella"] ? "img/EstrellaRellena.png" : "img/EstrellaVacia.png";
-                    echo " <a href='PersonaEstablecerEstadoEstrella.php?id=$fila[pId]'><img src='$urlImagen' width='16' height='16'></a> ";
-
-                    echo "<a href='PersonaFicha.php?id=$fila[pId]'>";
-                    echo "$fila[pNombre]";
-                    if ($fila["pApellidos"] != "") {
-                        echo " $fila[pApellidos]";
-                    }
-                    echo "</a>";
-                ?>
-            </td>
-            <td><a href= 'CategoriaFicha.php?id=<?=$fila["cId"]?>'> <?= $fila["cNombre"] ?> </a></td>
-            <td><a href='PersonaEliminar.php?id=<?=$fila["pId"]?>'> (X)                      </a></td>
+            <td><a href= 'PersonaFicha.php?id=<?=$persona->getId()?>'> <?= $persona->getNombre() ?> </a></td>
+            <td><a href= 'CategoriaFicha.php?id=<?=$persona->getCategoriaId()?>'> <?= DAO::personaCategoria($persona->getCategoriaId()) ?> </a></td>
+            <td><a href='PersonaEliminar.php?id=<?=$persona->getId()?>'> (X)                      </a></td>
         </tr>
     <?php } ?>
 
