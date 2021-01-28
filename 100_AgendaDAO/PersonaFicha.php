@@ -29,7 +29,7 @@
 
 <form method='post' action='PersonaGuardar.php'>
 
-<input type='hidden' name='id' value='<?= $id ?>' />
+    <input type='hidden' name='id' value='<?= $id ?>' />
 
     <label for='nombre'>Nombre</label>
     <input type='text' name='nombre' value='<?=$datos[1]?>' />
@@ -63,23 +63,13 @@
 
     <br/>
 
-<?php if ($datos[0]) { ?>
-	<input type='submit' name='crear' value='Crear persona' />
-<?php } else { ?>
-	<input type='submit' name='guardar' value='Guardar cambios' />
-<?php } ?>
+    <?php if ($datos[0]) { ?>
+	    <input type='submit' name='crear' value='Crear persona' />
+    <?php } else { ?>
+	    <input type='submit' name='guardar' value='Guardar cambios' />
+    <?php } ?>
 
 </form>
-
-<?php if (!$datos[0]) { ?>
-    <br />
-    <a href='PersonaEliminar.php?id=<?=$id ?>'>Eliminar persona</a>
-<?php } ?>
-
-<br />
-<br />
-
-<a href='PersonaListado.php'>Volver al listado de personas.</a>
 
 </body>
 
