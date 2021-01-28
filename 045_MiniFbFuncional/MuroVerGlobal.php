@@ -1,5 +1,5 @@
 <?php
-
+    
     require_once "_com/_Varios.php";
     require_once "_com/dao.php";
 
@@ -14,7 +14,6 @@
 
     $posibleClausulaWhere= "";
     $publicaciones= dao::publicacionObtenerTodas($posibleClausulaWhere);
-
 ?>
 
 
@@ -33,7 +32,13 @@
 
 <h1>Muro global</h1>
 
-<p>Aquí mostraremos todos los mensajes de todos a todos.</p>
+<form action="PublicacionNuevaCrear.php?ficha=MuroVerGlobal.php" method="POST">
+    <label>Asunto:</label><br/>
+    <input type="text" name="asunto" id="asunto"><br/>
+    <label>Contenido:</label><br/>
+    <textarea name="nuevaPublicacion" id="nuevaPublicacion" rows="4" cols="50"></textarea>
+    <input type="submit" value="Publicar">
+</form>
 
 <table border='1'>
 
@@ -50,11 +55,19 @@
     <?php
     foreach ($publicaciones as $publicacion) { ?>
         <tr>
-            
+            <?php $emisor= dao::usuarioObtenerPorId($publicacion->getEmisorId());
+                if($publicacion->getDestinatarioId() != null) {
+                    $destinatario= dao::usuarioObtenerPorId($publicacion->getDestinatarioId()); 
+                } else {
+                    $destinatario= null; } ?>
             <td><?= $publicacion->getId() ?></td>
             <td><?= $publicacion->getFecha() ?></td>
-            <td><?= $publicacion->getEmisorId() ?></td>
-            <td><?= $publicacion->getDestinatarioId() ?></td>
+            <td><a href="MuroVerDe.php?id=<?= $publicacion->getEmisorId() ?>"><?= $emisor->getNombre() ?></a></td>
+            <?php if($destinatario != null) { ?>
+                <td><a href="MuroVerDe.php?id=<?= $destinatario->getId() ?>"><?= $destinatario->getNombre() ?></a></td>
+            <?php } else {?>
+                <td><?= $publicacion->getDestinatarioId() ?></td>
+            <?php } ?>
             <td><?= $publicacion->getDestacadoHasta() ?></td>
             <td><?= $publicacion->getAsunto() ?></td>
             <td><?= $publicacion->getContenido() ?></td>
@@ -63,7 +76,7 @@
 
 </table>
 
-<a href='MuroVerDe.php'>Ir a mi muro.</a>
+<a href="MuroVerDe.php?id=<?= $_SESSION["id"] ?>">Ir a mi muro.</a>
 
 </body>
 

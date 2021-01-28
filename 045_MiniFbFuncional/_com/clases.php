@@ -25,13 +25,13 @@ class Usuario extends Dato
 
     private string $identificador;
     private string $contrasenna;
-    private string $codigoCookie;
-    private string $caducidadCodigoCookie;
+    private ?string $codigoCookie;
+    private ?string $caducidadCodigoCookie;
     private int $tipoUsuario;
     private String $nombre;
     private string $apellidos;
 
-    public function __construct(int $id, string $identificador, string $contrasenna, string $codigoCookie, string $caducidadCodigoCookie, int $tipoUsuario, string $nombre, string $apellidos)
+    public function __construct(int $id, string $identificador, string $contrasenna, ?string $codigoCookie, ?string $caducidadCodigoCookie, int $tipoUsuario, string $nombre, string $apellidos)
     {
         $this->setId($id);
         $this->setIdentificador($identificador);
@@ -61,11 +61,11 @@ class Usuario extends Dato
         $this->contrasenna = $contrasenna;
     }
 
-    public function getCodigoCookie(): string
+    public function getCodigoCookie(): ?string
     {
         return $this->codigoCookie;
     }
-    public function setCodigoCookie(string $codigoCookie)
+    public function setCodigoCookie($codigoCookie)
     {
         $this->codigoCookie = $codigoCookie;
     }
@@ -74,7 +74,7 @@ class Usuario extends Dato
     {
         return $this->caducidadCodigoCookie;
     }
-    public function setCaducidadCodigoCookie(string $caducidadCodigoCookie)
+    public function setCaducidadCodigoCookie($caducidadCodigoCookie)
     {
         $this->codigoCookie = $caducidadCodigoCookie;
     }

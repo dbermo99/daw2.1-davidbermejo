@@ -12,7 +12,10 @@
         redireccionar("SesionInicioFormulario.php");
     }
 
-    $posibleClausulaWhere= "WHERE emisorId LIKE $_SESSION[id]";
+    $id= (int)$_REQUEST["id"];
+    $usuario= dao::usuarioObtenerPorId($id);
+
+    $posibleClausulaWhere= "WHERE destinatarioId LIKE ".$id;
     $publicaciones= dao::publicacionObtenerTodas($posibleClausulaWhere);
 
 ?>
@@ -31,9 +34,15 @@
 
 <?php dao::pintarInfoSesion(); ?>
 
-<h1>Muro de <?php echo $_SESSION["identificador"]; ?></h1>
+<h1>Muro de <?php echo $usuario->getIdentificador() ?></h1>
+<?php echo "<form action='PublicacionNuevaCrear.php?destinatarioId=".$usuario->getId()."&ficha=MuroVerDe.php?id=".$usuario->getId()."' method='POST'>" ?>
 
-<p>/Aquí mostraremos los mensajes que hayan sido publicados para el usuario indicado como parámetro. Si no indican nada, veo los mensajes dirigidos a mí. Si indican otra cosa, veo los mensajes dirigidos a ese usuario.</p>
+    <label>Asunto:</label><br/>
+    <input type="text" name="asunto" id="asunto"><br/>
+    <label>Contenido:</label><br/>
+    <textarea name="nuevaPublicacion" id="nuevaPublicacion" rows="4" cols="50"></textarea>
+    <input type="submit" value="Publicar">
+</form>
 
 <table border='1'>
 
@@ -50,11 +59,19 @@
     <?php
     foreach ($publicaciones as $publicacion) { ?>
         <tr>
-
+            <?php $emisor= dao::usuarioObtenerPorId($publicacion->getEmisorId());
+                if($publicacion->getDestinatarioId() != null) {
+                    $destinatario= dao::usuarioObtenerPorId($publicacion->getDestinatarioId()); 
+                } else {
+                    $destinatario= null; } ?>
             <td><?= $publicacion->getId() ?></td>
             <td><?= $publicacion->getFecha() ?></td>
-            <td><?= $publicacion->getEmisorId() ?></td>
-            <td><?= $publicacion->getDestinatarioId() ?></td>
+            <td><a href="MuroVerDe.php?id=<?= $publicacion->getEmisorId() ?>"><?= $emisor->getNombre() ?></a></td>
+            <?php if($destinatario != null) { ?>
+                <td><a href="MuroVerDe.php?id=<?= $destinatario->getId() ?>"><?= $destinatario->getNombre() ?></a></td>
+            <?php } else {?>
+                <td><?= $publicacion->getDestinatarioId() ?></td>
+            <?php } ?>
             <td><?= $publicacion->getDestacadoHasta() ?></td>
             <td><?= $publicacion->getAsunto() ?></td>
             <td><?= $publicacion->getContenido() ?></td>

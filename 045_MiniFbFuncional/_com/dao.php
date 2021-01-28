@@ -75,7 +75,7 @@ class DAO
         );
     }
 
-    public static function publicacionCrear(string $fecha, int $emisorId, int $destinatarioId, string $destacadoHasta, string $asunto, string $contenido): bool
+    public static function publicacionCrear(string $fecha, int $emisorId, $destinatarioId, $destacadoHasta, string $asunto, string $contenido): bool
     {
         return self::ejecutarActualizacion(
             "INSERT INTO Publicacion (fecha, emisorId, destinatarioId, destacadaHasta, asunto, contenido) VALUES (?, ?, ?, ?, ?, ?)",
