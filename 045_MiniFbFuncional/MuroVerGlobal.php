@@ -35,6 +35,8 @@
 <form action="PublicacionNuevaCrear.php?ficha=MuroVerGlobal.php" method="POST">
     <label>Asunto:</label><br/>
     <input type="text" name="asunto" id="asunto"><br/>
+    <label>Destacado Hasta:</label>
+    <input type="date" name="destacadoHasta" id="destacadoHasta"><br/>
     <label>Contenido:</label><br/>
     <textarea name="nuevaPublicacion" id="nuevaPublicacion" rows="4" cols="50"></textarea>
     <input type="submit" value="Publicar">
@@ -45,11 +47,12 @@
     <tr>
         <th>Id</th>
         <th>Fecha</th>
-        <th>EmisorId</th>
-        <th>DestinatarioId</th>
+        <th>Emisor</th>
+        <th>Destinatario</th>
         <th>DestacadoHasta</th>
         <th>Asunto</th>
         <th>Contenido</th>
+        <th>Eliminar</th>
     </tr>
 
     <?php
@@ -71,6 +74,9 @@
             <td><?= $publicacion->getDestacadoHasta() ?></td>
             <td><?= $publicacion->getAsunto() ?></td>
             <td><?= $publicacion->getContenido() ?></td>
+            <?php if($emisor->getId() == $_SESSION["id"]) { ?>
+                <td><a href="PublicacionEliminar.php?ficha=MuroVerGlobal.php&id=<?= $publicacion->getId() ?>">X</a></td>
+            <?php } ?>
         </tr>
     <?php } ?>
 

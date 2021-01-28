@@ -1,6 +1,6 @@
 <?php
     require_once "_com/dao.php";
-
+    
     $asunto= $_REQUEST["asunto"];
     $contenido= $_REQUEST["nuevaPublicacion"];
     $fecha= date("Y-m-d H:i:s");

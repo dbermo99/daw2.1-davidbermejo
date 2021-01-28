@@ -12,8 +12,14 @@
         redireccionar("SesionInicioFormulario.php");
     }
 
-    $id= (int)$_REQUEST["id"];
-    $usuario= dao::usuarioObtenerPorId($id);
+    if(isset($_REQUEST["idUsuario"])) {
+        $id= (int)$_REQUEST["idUsuario"];
+        $usuario= dao::usuarioObtenerPorId($id);
+    }else {
+        $id= (int)$_REQUEST["id"];
+        $usuario= dao::usuarioObtenerPorId($id);
+    }
+    
 
     $posibleClausulaWhere= "WHERE destinatarioId LIKE ".$id;
     $publicaciones= dao::publicacionObtenerTodas($posibleClausulaWhere);
@@ -54,6 +60,7 @@
         <th>DestacadoHasta</th>
         <th>Asunto</th>
         <th>Contenido</th>
+        <th>Eliminar</th>
     </tr>
 
     <?php
@@ -75,6 +82,9 @@
             <td><?= $publicacion->getDestacadoHasta() ?></td>
             <td><?= $publicacion->getAsunto() ?></td>
             <td><?= $publicacion->getContenido() ?></td>
+            <?php if($emisor->getId() == $_SESSION["id"]) { ?>
+                <td><a href="PublicacionEliminar.php?ficha=MuroVerDe.php&id=<?= $publicacion->getId() ?>">X</a></td>
+            <?php } ?>
         </tr>
     <?php } ?>
 
