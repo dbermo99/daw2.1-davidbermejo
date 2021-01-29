@@ -101,7 +101,7 @@ function actualizarUsuarioEnBD($identificador, $contrasenna, $nombre, $apellidos
     $pdo= obtenerPdoConexionBD();
     $sql= "UPDATE usuario SET identificador = ?, contrasenna = ?, nombre = ?, apellidos = ?, foto = ? WHERE id=?";
     $select = $pdo->prepare($sql);
-    $select->execute([$identificador, $contrasenna, $nombre, $apellidos, $foto, $_SESSION[id]]);
+    $select->execute([$identificador, $contrasenna, $nombre, $apellidos, $foto, $_SESSION["id"]]);
     $_SESSION["identificador"] = $identificador;
     $_SESSION["contrasenna"] = $contrasenna;
     $_SESSION["nombre"] = $nombre;

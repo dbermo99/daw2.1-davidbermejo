@@ -119,7 +119,7 @@ class Publicacion extends Dato
     private String $asunto;
     private string $contenido;
 
-    public function __construct(int $id, string $fecha, int $emisorId,  $destinatarioId, $destacadaHasta, string $asunto, string $contenido)
+    public function __construct(int $id, string $fecha, int $emisorId,  $destinatarioId,  $destacadaHasta, string $asunto, string $contenido)
     {
         $this->setId($id);
         $this->setFecha($fecha);
@@ -152,7 +152,7 @@ class Publicacion extends Dato
     {
         return $this->destinatarioId;
     }
-    public function setDestinatarioId( $destinatarioId)
+    public function setDestinatarioId($destinatarioId)
     {
         $this->destinatarioId = $destinatarioId;
     }

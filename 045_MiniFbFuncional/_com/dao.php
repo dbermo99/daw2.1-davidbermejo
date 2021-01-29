@@ -54,7 +54,9 @@ class DAO
 
     private static function publicacionCrearDesdeRs(array $fila): Publicacion
     {
-        return new Publicacion($fila["id"], $fila["fecha"], $fila["emisorId"], $fila["destinatarioId"], $fila["destacadaHasta"], $fila["asunto"], $fila["contenido"]);
+        if(isset($fila["destacadaHasta"]) && $fila["destacadaHasta"] == null)
+            $fila["destacadaHasta"] = "";
+        return new Publicacion($fila["id"], $fila["fecha"], $fila["emisorId"], $fila["destinatarioId"], $fila["destacadoHasta"], $fila["asunto"], $fila["contenido"]);
     }
 
     public static function publicacionObtenerPorId(int $id): ?Publicacion
@@ -75,8 +77,10 @@ class DAO
         );
     }
 
-    public static function publicacionCrear(string $fecha, int $emisorId, $destinatarioId, $destacadoHasta, string $asunto, string $contenido): bool
+    public static function publicacionCrear(string $fecha, int $emisorId, $destinatarioId, string $destacadoHasta, string $asunto, string $contenido): bool
     {
+        if($destacadoHasta == null)
+            $destacadoHasta= "";
         return self::ejecutarActualizacion(
             "INSERT INTO Publicacion (fecha, emisorId, destinatarioId, destacadaHasta, asunto, contenido) VALUES (?, ?, ?, ?, ?, ?)",
             [$fecha, $emisorId, $destinatarioId, $destacadoHasta, $asunto, $contenido]
