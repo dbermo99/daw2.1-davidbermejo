@@ -45,6 +45,8 @@
 
     <label>Asunto:</label><br/>
     <input type="text" name="asunto" id="asunto"><br/>
+    <label>Destacado Hasta:</label>
+    <input type="date" name="destacadoHasta" id="destacadoHasta"><br/>
     <label>Contenido:</label><br/>
     <textarea name="nuevaPublicacion" id="nuevaPublicacion" rows="4" cols="50"></textarea>
     <input type="submit" value="Publicar">

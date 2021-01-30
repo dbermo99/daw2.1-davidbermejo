@@ -16,8 +16,8 @@ SET time_zone = "+00:00";
 -- Base de datos: `MiniFb`
 --
 DROP DATABASE IF EXISTS MiniFbFoto;
-CREATE DATABASE IF NOT EXISTS `MiniFbFoto` DEFAULT CHARACTER SET utf8 COLLATE utf8_spanish_ci;
-USE `MiniFbFoto`;
+CREATE DATABASE IF NOT EXISTS `MiniFb` DEFAULT CHARACTER SET utf8 COLLATE utf8_spanish_ci;
+USE `MiniFb`;
 
 -- --------------------------------------------------------
 

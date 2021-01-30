@@ -64,16 +64,35 @@
                 } else {
                     $destinatario= null; } ?>
             <td><?= $publicacion->getId() ?></td>
-            <td><?= $publicacion->getFecha() ?></td>
+            <?php if($publicacion->getDestacadoHasta() != null && $publicacion->getDestacadoHasta() != "0000-00-00 00:00:00") { ?>
+                <td><b><?= $publicacion->getFecha() ?></b></td>
+            <?php } else { ?>
+                <td><?= $publicacion->getFecha() ?></td>
+            <?php } ?>
+            
             <td><a href="MuroVerDe.php?id=<?= $publicacion->getEmisorId() ?>"><?= $emisor->getNombre() ?></a></td>
             <?php if($destinatario != null) { ?>
                 <td><a href="MuroVerDe.php?id=<?= $destinatario->getId() ?>"><?= $destinatario->getNombre() ?></a></td>
             <?php } else {?>
                 <td><?= $publicacion->getDestinatarioId() ?></td>
             <?php } ?>
-            <td><?= $publicacion->getDestacadoHasta() ?></td>
-            <td><?= $publicacion->getAsunto() ?></td>
-            <td><?= $publicacion->getContenido() ?></td>
+            <?php if($publicacion->getDestacadoHasta() != null && $publicacion->getDestacadoHasta() != "0000-00-00 00:00:00") { ?>
+                <td><b><?= $publicacion->getDestacadoHasta() ?></b></td>
+            <?php } else { ?>
+                <td><?= $publicacion->getDestacadoHasta() ?></td>
+            <?php } ?>
+            
+            <?php if($publicacion->getDestacadoHasta() != null && $publicacion->getDestacadoHasta() != "0000-00-00 00:00:00") { ?>
+                <td><b><?= $publicacion->getAsunto() ?></b></td>
+            <?php } else { ?>
+                <td><?= $publicacion->getAsunto() ?></td>
+            <?php } ?>
+            
+            <?php if($publicacion->getDestacadoHasta() != null && $publicacion->getDestacadoHasta() != "0000-00-00 00:00:00") { ?>
+                <td><b><?= $publicacion->getContenido() ?></b></td>
+            <?php } else { ?>
+                <td><?= $publicacion->getContenido() ?></td>
+            <?php } ?>
             <?php if($emisor->getId() == $_SESSION["id"]) { ?>
                 <td><a href="PublicacionEliminar.php?ficha=MuroVerGlobal.php&id=<?= $publicacion->getId() ?>">X</a></td>
             <?php } ?>

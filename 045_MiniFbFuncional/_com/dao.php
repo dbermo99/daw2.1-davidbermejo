@@ -54,8 +54,8 @@ class DAO
 
     private static function publicacionCrearDesdeRs(array $fila): Publicacion
     {
-        if(isset($fila["destacadaHasta"]) && $fila["destacadaHasta"] == null)
-            $fila["destacadaHasta"] = "";
+        if(isset($fila["destacadoHasta"]) && $fila["destacadoHasta"] == null)
+            $fila["destacodoHasta"] = "";
         return new Publicacion($fila["id"], $fila["fecha"], $fila["emisorId"], $fila["destinatarioId"], $fila["destacadoHasta"], $fila["asunto"], $fila["contenido"]);
     }
 
@@ -72,7 +72,7 @@ class DAO
     public static function publicacionActualizar(int $id, string $fecha, int $emisorId, int $destinatarioId, string $destacadoHasta, string $asunto, string $contenido)
     {
         self::ejecutarActualizacion(
-            "UPDATE Publicacion SET fecha=?, emisorId=?, destinatarioId=?, destacadaHasta=?, asunto=?, contenido=? WHERE id=?",
+            "UPDATE Publicacion SET fecha=?, emisorId=?, destinatarioId=?, destacadoHasta=?, asunto=?, contenido=? WHERE id=?",
             [$fecha, $emisorId, $destinatarioId, $destacadoHasta, $asunto, $contenido, $id]
         );
     }
@@ -82,7 +82,7 @@ class DAO
         if($destacadoHasta == null)
             $destacadoHasta= "";
         return self::ejecutarActualizacion(
-            "INSERT INTO Publicacion (fecha, emisorId, destinatarioId, destacadaHasta, asunto, contenido) VALUES (?, ?, ?, ?, ?, ?)",
+            "INSERT INTO Publicacion (fecha, emisorId, destinatarioId, destacadoHasta, asunto, contenido) VALUES (?, ?, ?, ?, ?, ?)",
             [$fecha, $emisorId, $destinatarioId, $destacadoHasta, $asunto, $contenido]
         );
     }
