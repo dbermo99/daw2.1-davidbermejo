@@ -58,42 +58,57 @@ function insertarCategoria(categoria) {
     // Usar esto: https://www.w3schools.com/jsref/met_node_insertbefore.asp
 
     var tr = document.createElement("tr");
+    tr.setAttribute("id", "categoria"+categoria.id);
+    
     var td = document.createElement("td");
     var td2 = document.createElement("td");
+    
     var a = document.createElement("a");
     var a2 = document.createElement("a");
 
     a.setAttribute("href","CategoriaFicha.php?id=" + categoria.id);
-    a2.setAttribute("href","CategoriaEliminar.php?id=" + categoria.id);
+    a2.setAttribute("onclick","eliminarCategoria(" + categoria.id + ")");
+
     var textoContenido = document.createTextNode(categoria.nombre);
-    var textoContenido2 = document.createTextNode("Eliminar");
+    var textoContenido2 = document.createTextNode("X");
 
     a.appendChild(textoContenido);
     a2.appendChild(textoContenido2);
+
     td.appendChild(a);
     td2.appendChild(a2);
+
     tr.appendChild(td);
     tr.appendChild(td2);
+
     tablaCategorias.appendChild(tr);
 }
 
 function eliminarCategoria(id) {
-    var tr = document.createElement("tr");
-    var td = document.createElement("td");
-    var a = document.createElement("a");
-    a.setAttribute("href","CategoriaEliminar.php?id=" + id);
-    var textoContenido = document.createTextNode("Eliminada");
-
-    a.appendChild(textoContenido);
-    td.appendChild(a);
-    tr.appendChild(td);
-    tablaCategorias.appendChild(tr);
+    var request= new XMLHttpRequest();
+    request.open("GET", "categoriaEliminar.php?id="+id);
+    request.onreadystatechange = function () {
+        if (this.readyState == 4 && this.status == 200) {
+            var linea=document.getElementById("categoria"+id);
+            linea.remove();
+        }
+    };
+    request.send()
 }
 
 function modificarCategoria(categoria) {
     // TODO Pendiente de hacer.
-    nombre= document.getElementById("nombre").value;
-    
+    // nombre= document.getElementById("nombre").value;
+
+    var request= new XMLHttpRequest();
+    request.open("GET", "categoriaGuardar.php?id="+categoria.id+"&nombre="+categoria.nombre);
+    request.onreadystatechange = function () {
+        if (this.readyState == 4 && this.status == 200) {
+            var linea=document.getElementById("categoria"+id);
+            linea.remove();
+        }
+    };
+    request.send()
 }
 
 // TODO Actualizar lo local si actualizan el servidor. Poner timestamp de modificación en la tabla y pedir categoriaObtenerModificadasDesde(timestamp)
