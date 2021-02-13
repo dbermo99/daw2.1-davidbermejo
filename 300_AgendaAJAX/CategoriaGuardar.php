@@ -1,11 +1,16 @@
 <?php
 	require_once "_com/Varios.php";
+	require_once "_com/DAO.php";
 
-	$conexionBD = obtenerPdoConexionBD();
+	// $conexionBD = obtenerPdoConexionBD();
 
 	// Se recogen los datos del formulario de la request.
 	$id = (int)$_REQUEST["id"];
 	$nombre = $_REQUEST["nombre"];
+
+	if(!isset($_REQUEST["id"]) || !isset($_REQUEST["nombre"])) {
+		redireccionar("fallo.php");
+	}
 
 	// Si id es -1 quieren CREAR una nueva entrada ($nueva_entrada tomará true).
 	// Sin embargo, si id NO es -1 quieren VER la ficha de una categoría existente
@@ -14,23 +19,25 @@
 	
 	if ($nuevaEntrada) {
 		// Quieren CREAR una nueva entrada, así que es un INSERT.
- 		$sql = "INSERT INTO Categoria (nombre) VALUES (?)";
- 		$parametros = [$nombre];
+ 		// $sql = "INSERT INTO Categoria (nombre) VALUES (?)";
+ 		// $parametros = [$nombre];
+		 dao::categoriaCrear($nombre);
 	} else {
 		// Quieren MODIFICAR una categoría existente y es un UPDATE.
- 		$sql = "UPDATE Categoria SET nombre=? WHERE id=?";
-        $parametros = [$nombre, $id];
+ 		// $sql = "UPDATE Categoria SET nombre=? WHERE id=?";
+        // $parametros = [$nombre, $id];
+		dao::categoriaActualizar($id, $nombre);
  	}
  	
-    $sentencia = $conexionBD->prepare($sql);
+    // $sentencia = $conexionBD->prepare($sql);
     //Esta llamada devuelve true o false según si la ejecución de la sentencia ha ido bien o mal.
-    $sqlConExito = $sentencia->execute($parametros); // Se añaden los parámetros a la consulta preparada.
+    // $sqlConExito = $sentencia->execute($parametros); // Se añaden los parámetros a la consulta preparada.
 
  	// Está todo correcto de forma normal si NO ha habido errores y se ha visto afectada UNA fila.
- 	$correcto = ($sqlConExito && $sentencia->rowCount() == 1);
+ 	// $correcto = ($sqlConExito && $sentencia->rowCount() == 1);
 
  	// Si los datos no se habían modificado, también está correcto pero es "raro".
- 	$datosNoModificados = ($sqlConExito && $sentencia->rowCount() == 0);
+ 	// $datosNoModificados = ($sqlConExito && $sentencia->rowCount() == 0);
 
 
 
