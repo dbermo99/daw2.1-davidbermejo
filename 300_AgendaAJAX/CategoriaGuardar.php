@@ -8,10 +8,6 @@
 	$id = (int)$_REQUEST["id"];
 	$nombre = $_REQUEST["nombre"];
 
-	if(!isset($_REQUEST["id"]) || !isset($_REQUEST["nombre"])) {
-		redireccionar("fallo.php");
-	}
-
 	// Si id es -1 quieren CREAR una nueva entrada ($nueva_entrada tomará true).
 	// Sin embargo, si id NO es -1 quieren VER la ficha de una categoría existente
 	// (y $nueva_entrada tomará false).

@@ -120,4 +120,69 @@ class DAO
             return null;
         }
     }
+
+    /* PERSONA */
+    private static function personaCrearDesdeRs(array $fila): Persona
+    {
+        return new Persona($fila["id"], $fila["nombre"], $fila["apellidos"], $fila["telefono"], $fila["estrella"], $fila["categoriaId"]);
+    }
+
+    public static function personaObtenerPorId(int $id): ?Persona
+    {
+        $rs = self::ejecutarConsulta(
+            "SELECT * FROM Persona WHERE id=?",
+            [$id]
+        );
+        if ($rs) return self::personaCrearDesdeRs($rs[0]);
+        else return null;
+    }
+
+    public static function personaActualizar($id, $nombre, $apellidos, $telefono, $estrella, $categoriaId)
+    {
+        self::ejecutarActualizacion(
+            "UPDATE Persona SET nombre=?, apellidos=?, telefono=?, estrella=?, categoriaId=? WHERE id=?",
+            [$nombre, $apellidos, $telefono, $estrella, $categoriaId, $id]
+        );
+    }
+
+    public static function personaCrear(string $nombre, string $apellidos, string $telefono, bool $estrella, int $categoriaId): Persona
+    {
+        $idAutogenerado = self::ejecutarActualizacion(
+            "INSERT INTO Persona (nombre, apellidos, telefono, estrella, categoriaId) VALUES (?, ?, ?, ?, ?)",
+            [$nombre, $apellidos, $telefono, $estrella, $categoriaId]
+        );
+
+        return self::personaObtenerPorId($idAutogenerado);
+    }
+
+    public static function personaObtenerTodas(): array
+    {
+        $datos = [];
+
+        $rs = self::ejecutarConsulta(
+            "SELECT * FROM Persona ORDER BY nombre",
+            []
+        );
+
+        foreach ($rs as $fila) {
+            $persona = self::personaCrearDesdeRs($fila);
+            array_push($datos, $persona);
+        }
+
+        return $datos;
+    }
+
+    public static function personaEliminar(int $id): ?bool
+    {
+        $correcto= self::ejecutarActualizacion(
+            "DELETE FROM Persona WHERE id = ?",
+            [$id]
+        );
+        if($correcto) {
+            return true;
+        }else {
+            return null;
+        }
+    }
+
 }
