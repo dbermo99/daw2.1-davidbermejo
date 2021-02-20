@@ -75,7 +75,7 @@ function insertarCategoria(categoria) {
 
     a.setAttribute("href","CategoriaFicha.php?id=" + categoria.id);
     a2.setAttribute("onclick","eliminarCategoria(" + categoria.id + ")");
-    botonModificar.setAttribute("onclick", "modificarCategoria(" + categoria.id + ")");
+    botonModificar.setAttribute("onclick", "modificarCategoria(" + categoria + ")");
     td.setAttribute("id", "id"+categoria.id);
 
     var textoContenido = document.createTextNode(categoria.nombre);
@@ -109,22 +109,23 @@ function eliminarCategoria(id) {
     request.send()
 }
 
-function modificarCategoria(id) {
-    var td= document.getElementById("id"+id);
+function modificarCategoria(categoria) {
+    var td= document.getElementById("id"+categoria.id);
 
     if(td.textContent != "") {
         var input= document.createElement("input");
         input.setAttribute("type", "text");
-        input.setAttribute("id", "nuevoNombre"+id);
-        input.setAttribute("name", "nuevoNombre"+id);
+        input.setAttribute("id", "nuevoNombre"+categoria.id);
+        input.setAttribute("name", "nuevoNombre"+categoria.id);
+        input.setAttribute("value", categoria.nombre)
         td.removeChild(td.firstChild);
         td.appendChild(input); 
-    }else if(document.getElementById("nuevoNombre"+id).value != "") {
+    }else if(document.getElementById("nuevoNombre"+categoria.id).value != "") {
         var request= new XMLHttpRequest();
-        request.open("GET", "categoriaGuardar.php?id="+id+"&nombre="+document.getElementById("nuevoNombre"+id).value);
+        request.open("GET", "categoriaGuardar.php?id="+categoria.id+"&nombre="+document.getElementById("nuevoNombre"+categoria.id).value);
         request.onreadystatechange = function () {
             if (this.readyState == 4 && this.status == 200) {
-                var nuevoNombreCategoria = document.createTextNode(document.getElementById("nuevoNombre"+id).value);
+                var nuevoNombreCategoria = document.createTextNode(document.getElementById("nuevoNombre"+categoria.id).value);
                 td.removeChild(td.firstChild);
                 var a = document.createElement("a");
                 a.setAttribute("href","CategoriaFicha.php?id=" + categoria.id);
@@ -319,9 +320,11 @@ function modificarPersona(id) {
         var categoriaId= document.getElementById("nuevoCategoriaIdPersona"+id).value;
 
         var request= new XMLHttpRequest();
-        request.open("GET", "personaGuardar.php?id="+id+"&nombre="+nombre+"&apellidos="+apellidos+"&telefono="+telefono+"&estrela="+estrella+"&categoriaId="+categoriaId);
+        var url= "personaGuardar.php?id="+id+"&nombre="+nombre+"&apellidos="+apellidos+"&telefono="+telefono+"&estrela="+estrella+"&categoriaId="+categoriaId;
+        request.open("GET", url);
         request.onreadystatechange = function () {
             if (this.readyState == 4 && this.status == 200) {
+                
                 tdNombre.removeChild(td.firstChild);
                 var aNombre = document.createElement("a");
                 aNombre.setAttribute("href","PersonaFicha.php?id=" + id);
@@ -351,7 +354,7 @@ function modificarPersona(id) {
                 aCategoriaId.setAttribute("href","PersonaFicha.php?id=" + id);
                 aCategoriaId.appendChild(categoriaId);
                 tdCategoriaId.appendChild(aCategoriaId);
-                alert("correcto");
+                
             }
         };
         request.send()
