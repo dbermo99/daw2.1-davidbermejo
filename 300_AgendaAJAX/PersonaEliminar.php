@@ -3,7 +3,7 @@
 	require_once "_com/DAO.php";
 
 	$id = (int)$_REQUEST["id"];
-	$sqlConExito= dao::categoriaEliminar($id);
+	$sqlConExito= dao::personaEliminar($id);
 
 	$correcto= ($sqlConExito == true);
 	$noExistia= ($sqlConExito == null);

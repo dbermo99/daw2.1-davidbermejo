@@ -157,19 +157,12 @@ class DAO
 
     public static function personaObtenerTodas(): array
     {
-        $datos = [];
 
-        $rs = self::ejecutarConsulta(
+        return self::ejecutarConsulta(
             "SELECT * FROM Persona ORDER BY nombre",
             []
         );
 
-        foreach ($rs as $fila) {
-            $persona = self::personaCrearDesdeRs($fila);
-            array_push($datos, $persona);
-        }
-
-        return $datos;
     }
 
     public static function personaEliminar(int $id): ?bool

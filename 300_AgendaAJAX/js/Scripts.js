@@ -9,6 +9,10 @@ function inicializaciones() {
     tablaCategorias = document.getElementById("tablaCategorias");
     document.getElementById('submitCrearCategoria').addEventListener('click', clickCrearCategoria);
     cargarTodasLasCategorias();
+
+    tablaPersonas = document.getElementById("tablaPersonas");
+    document.getElementById('submitCrearPersona').addEventListener('click', clickCrearPersona);
+    cargarTodasLasPersonas();
 }
 
 //categorias
@@ -120,7 +124,12 @@ function modificarCategoria(id) {
         request.open("GET", "categoriaGuardar.php?id="+id+"&nombre="+document.getElementById("nuevoNombre"+id).value);
         request.onreadystatechange = function () {
             if (this.readyState == 4 && this.status == 200) {
-                alert("Modificacion correcta");
+                var nuevoNombreCategoria = document.createTextNode(document.getElementById("nuevoNombre"+id).value);
+                td.removeChild(td.firstChild);
+                var a = document.createElement("a");
+                a.setAttribute("href","CategoriaFicha.php?id=" + categoria.id);
+                a.appendChild(nuevoNombreCategoria);
+                td.appendChild(a);
             }
         };
         request.send()
@@ -132,7 +141,6 @@ function modificarCategoria(id) {
 //personas
 function cargarTodasLasPersonas() {
     var request = new XMLHttpRequest();
-
     request.onreadystatechange = function() {
         if (this.readyState == 4 && this.status == 200) {
             var personas = JSON.parse(this.responseText);
@@ -142,7 +150,6 @@ function cargarTodasLasPersonas() {
             }
         }
     };
-
     request.open("GET", "PersonaObtenerTodas.php");
     request.send();
 }
@@ -171,6 +178,7 @@ function clickCrearPersona() {
             if (this.readyState == 4 && this.status == 200) {
                 var personas = JSON.parse(this.responseText);
                 insertarPersona(personas);
+                
             }
         };
 
@@ -181,10 +189,10 @@ function clickCrearPersona() {
 
 function insertarPersona(persona) {
 
-    var tr = document.createElement("tr");
-    tr.setAttribute("id", "persona"+persona.id);
+    var trPersona = document.createElement("tr");
+    trPersona.setAttribute("id", "persona"+persona.id);
     
-    var td = document.createElement("td");
+    var tdNombrePersona = document.createElement("td");
     var tdApellidos= document.createElement("td");
     var tdTelefono= document.createElement("td");
     var tdEstrella= document.createElement("td");
@@ -192,56 +200,61 @@ function insertarPersona(persona) {
     var tdEliminar = document.createElement("td");
     var tdModificar= document.createElement("td");
     
-    var a = document.createElement("a");
+    var aNombre = document.createElement("a");
     var aApellidos = document.createElement("a");
     var aTelefono = document.createElement("a");
-    // var aEstrella = document.createElement("a");
+    var aEstrella = document.createElement("a");
     var aCategoriaId = document.createElement("a");
     var aEliminar = document.createElement("a");
     var botonModificar = document.createElement("button");
 
-    a.setAttribute("href","PersonaFicha.php?id=" + persona.id);
+    aNombre.setAttribute("href","PersonaFicha.php?id=" + persona.id);
     aApellidos.setAttribute("href","PersonaFicha.php?id=" + persona.id);
     aTelefono.setAttribute("href","PersonaFicha.php?id=" + persona.id);
-    // aEstrella.setAttribute("href","PersonaFicha.php?id=" + persona.id);
+    aEstrella.setAttribute("href","PersonaFicha.php?id=" + persona.id);
     aCategoriaId.setAttribute("href","PersonaFicha.php?id=" + persona.id);
     aEliminar.setAttribute("onclick","eliminarPersona(" + persona.id + ")");
     botonModificar.setAttribute("onclick", "modificarPersona(" + persona.id + ")");
-    td.setAttribute("id", "id"+persona.id);
+    
+    tdNombrePersona.setAttribute("id", "idNombre"+persona.id);
+    tdApellidos.setAttribute("id", "idApellidos"+persona.id);
+    tdTelefono.setAttribute("id", "idTelefono"+persona.id);
+    tdEstrella.setAttribute("id", "idEstrella"+persona.id);
+    tdCategoriaId.setAttribute("id", "idCategoriaId"+persona.id);
 
     var textoContenido = document.createTextNode(persona.nombre);
     var textoApellidos = document.createTextNode(persona.apellidos);
     var textoTelefono = document.createTextNode(persona.telefono);
-    // var textoEstrella = document.createTextNode(persona.estrella);
+    var textoEstrella = document.createTextNode(persona.estrella);
     var textoCategoriaId = document.createTextNode(persona.categoriaId);
     var textoContenido2 = document.createTextNode("X");
     var textoModificar= document.createTextNode("Modificar");
 
-    a.appendChild(textoContenido);
+    aNombre.appendChild(textoContenido);
     aApellidos.appendChild(textoApellidos);
     aTelefono.appendChild(textoTelefono);
-    // aEstrella.appendChild(textoEstrella);
+    aEstrella.appendChild(textoEstrella);
     aCategoriaId.appendChild(textoCategoriaId);
     aEliminar.appendChild(textoContenido2);
     botonModificar.appendChild(textoModificar);
 
-    td.appendChild(a);
+    tdNombrePersona.appendChild(aNombre);
     tdApellidos.appendChild(aApellidos);
     tdTelefono.appendChild(aTelefono);
-    // tdEstrella.appendChild(aEstrella);
+    tdEstrella.appendChild(aEstrella);
     tdCategoriaId.appendChild(aCategoriaId);
     tdEliminar.appendChild(aEliminar);
     tdModificar.appendChild(botonModificar);
 
-    tr.appendChild(td);
-    tr.appendChild(tdApellidos);
-    tr.appendChild(tdTelefono);
-    tr.appendChild(tdEstrella);
-    tr.appendChild(tdCategoriaId);
-    tr.appendChild(tdEliminar);
-    tr.appendChild(tdModificar);
+    trPersona.appendChild(tdNombrePersona);
+    trPersona.appendChild(tdApellidos);
+    trPersona.appendChild(tdTelefono);
+    trPersona.appendChild(tdEstrella);
+    trPersona.appendChild(tdCategoriaId);
+    trPersona.appendChild(tdEliminar);
+    trPersona.appendChild(tdModificar);
 
-    tablaPersonas.appendChild(tr);
+    tablaPersonas.appendChild(trPersona);
 }
 
 function eliminarPersona(id) {
@@ -257,23 +270,93 @@ function eliminarPersona(id) {
 }
 
 function modificarPersona(id) {
-    var td= document.getElementById("idPersona"+id);
+    var tdNombre= document.getElementById("idNombre"+id);
+    var tdApellidos= document.getElementById("idApellidos"+id);
+    var tdTelefono= document.getElementById("idTelefono"+id);
+    var tdEstrella= document.getElementById("idEstrella"+id);
+    var tdCategoriaId= document.getElementById("idCategoriaId"+id);
 
-    if(td.textContent != "") {
+    if(tdNombre.textContent != "" && tdApellidos.textContent != "" && tdTelefono.textContent != "" && tdEstrella.textContent != "" && tdCategoriaId.textContent != "" ) {
         var input= document.createElement("input");
         input.setAttribute("type", "text");
-        input.setAttribute("idPersona", "nuevoNombrePersona"+id);
-        input.setAttribute("namePersona", "nuevoNombrePersona"+id);
-        td.removeChild(td.firstChild);
-        td.appendChild(input); 
-    }else if(document.getElementById("nuevoNombrePersona"+id).value != "") {
+        input.setAttribute("id", "nuevoNombrePersona"+id);
+        input.setAttribute("name", "nuevoNombrePersona"+id);
+        tdNombre.removeChild(tdNombre.firstChild);
+        tdNombre.appendChild(input);
+
+        var inputApellidos= document.createElement("input");
+        inputApellidos.setAttribute("type", "text");
+        inputApellidos.setAttribute("id", "nuevoApellidosPersona"+id);
+        inputApellidos.setAttribute("name", "nuevoApellidosPersona"+id);
+        tdApellidos.removeChild(tdApellidos.firstChild);
+        tdApellidos.appendChild(inputApellidos);
+
+        var inputTelefono= document.createElement("input");
+        inputTelefono.setAttribute("type", "text");
+        inputTelefono.setAttribute("id", "nuevoTelefonoPersona"+id);
+        inputTelefono.setAttribute("name", "nuevoTelefonoPersona"+id);
+        tdTelefono.removeChild(tdTelefono.firstChild);
+        tdTelefono.appendChild(inputTelefono);
+
+        var inputEstrella= document.createElement("input");
+        inputEstrella.setAttribute("type", "text");
+        inputEstrella.setAttribute("id", "nuevoEstrellaPersona"+id);
+        inputEstrella.setAttribute("name", "nuevoEstrellaPersona"+id);
+        tdEstrella.removeChild(tdEstrella.firstChild);
+        tdEstrella.appendChild(inputEstrella);
+
+        var inputCategoriaId= document.createElement("input");
+        inputCategoriaId.setAttribute("type", "text");
+        inputCategoriaId.setAttribute("id", "nuevoCategoriaIdPersona"+id);
+        inputCategoriaId.setAttribute("name", "nuevoCategoriaIdPersona"+id);
+        tdCategoriaId.removeChild(tdCategoriaId.firstChild);
+        tdCategoriaId.appendChild(inputCategoriaId);
+    }else if(document.getElementById("nuevoNombrePersona"+id).value != "" && document.getElementById("nuevoApellidosPersona"+id).value != "" && document.getElementById("nuevoTelefonoPersona"+id).value != "" && document.getElementById("nuevoEstrellaPersona"+id).value != "" && document.getElementById("nuevoCategoriaIdPersona"+id).value != "") {
+        var nombre= document.getElementById("nuevoNombrePersona"+id).value;
+        var apellidos= document.getElementById("nuevoApellidosPersona"+id).value;
+        var telefono= document.getElementById("nuevoTelefonoPersona"+id).value;
+        var estrella= document.getElementById("nuevoEstrellaPersona"+id).value;
+        var categoriaId= document.getElementById("nuevoCategoriaIdPersona"+id).value;
+
         var request= new XMLHttpRequest();
-        request.open("GET", "personaGuardar.php?id="+id+"&nombre="+document.getElementById("nuevoNombrePersona"+id).value+"&apellidos");
+        request.open("GET", "personaGuardar.php?id="+id+"&nombre="+nombre+"&apellidos="+apellidos+"&telefono="+telefono+"&estrela="+estrella+"&categoriaId="+categoriaId);
         request.onreadystatechange = function () {
             if (this.readyState == 4 && this.status == 200) {
-                alert("Modificacion correcta");
+                tdNombre.removeChild(td.firstChild);
+                var aNombre = document.createElement("a");
+                aNombre.setAttribute("href","PersonaFicha.php?id=" + id);
+                aNombre.appendChild(nombre);
+                tdNombre.appendChild(aNombre);
+
+                tdApellidos.removeChild(tdApellidos.firstChild);
+                var aApellidos = document.createElement("a");
+                aApellidos.setAttribute("href","PersonaFicha.php?id=" + id);
+                aApellidos.appendChild(apellidos);
+                tdApellidos.appendChild(aApellidos);
+
+                tdTelefono.removeChild(tdTelefono.firstChild);
+                var aTelefono = document.createElement("a");
+                aTelefono.setAttribute("href","PersonaFicha.php?id=" + id);
+                aTelefono.appendChild(telefono);
+                tdTelefono.appendChild(aTelefono);
+
+                tdEstrella.removeChild(tdEstrella.firstChild);
+                var aTelefono = document.createElement("a");
+                aEstrella.setAttribute("href","PersonaFicha.php?id=" + id);
+                aEstrella.appendChild(estrella);
+                tdEstrella.appendChild(aEstrella);
+
+                tdCategoriaId.removeChild(tdCategoriaId.firstChild);
+                var aCategoriaId = document.createElement("a");
+                aCategoriaId.setAttribute("href","PersonaFicha.php?id=" + id);
+                aCategoriaId.appendChild(categoriaId);
+                tdCategoriaId.appendChild(aCategoriaId);
+                alert("correcto");
             }
         };
         request.send()
+        
+    }else {
+        alert("Rellena todos los campos");
     }
 }

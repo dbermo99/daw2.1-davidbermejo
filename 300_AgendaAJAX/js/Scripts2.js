@@ -1,5 +1,6 @@
 window.onload = inicializaciones;
 var tablaPersonas;
+// TODO ¿Útil para mantener un control de eliminaciones, etc.?     var categorias;
 
 function inicializaciones() {
     tablaPersonas = document.getElementById("tablaPersonas");
@@ -10,7 +11,6 @@ function inicializaciones() {
 //personas
 function cargarTodasLasPersonas() {
     var request = new XMLHttpRequest();
-
     request.onreadystatechange = function() {
         if (this.readyState == 4 && this.status == 200) {
             var personas = JSON.parse(this.responseText);
@@ -20,7 +20,6 @@ function cargarTodasLasPersonas() {
             }
         }
     };
-
     request.open("GET", "PersonaObtenerTodas.php");
     request.send();
 }
@@ -47,8 +46,9 @@ function clickCrearPersona() {
     if(nombre != "") {
         request.onreadystatechange = function() {
             if (this.readyState == 4 && this.status == 200) {
-                var personas = JSON.parse();
+                var personas = JSON.parse(this.responseText);
                 insertarPersona(personas);
+                
             }
         };
 
